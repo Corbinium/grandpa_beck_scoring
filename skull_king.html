@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skull King Score Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+
+        .container {
+            border: 2px solid #333;
+            /* padding: 20px; */
+            background: white;
+            display: inline-block;
+        }
+
+        .content {
+            display: flex;
+            /* gap: 20px; */
+        }
+
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            /* gap: 10px; */
+        }
+
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            /* gap: 10px; */
+        }
+
+        .box {
+            border: 2px solid #666;
+            /* padding: 20px; */
+            background: #fafafa;
+        }
+
+        .left-column .box {
+            width: 150px;
+            height: 100px;
+        }
+
+        .right-column .box:first-child {
+            width: 150px;
+            height: 80px;
+        }
+
+        .right-column .box:last-child {
+            width: 150px;
+            height: 140px;
+        }
+
+        .toggle-buttons {
+            display: flex;
+            /* gap: 10px; */
+            /* margin-top: 10px; */
+        }
+
+        .toggle-btn {
+            /* padding: 10px 20px; */
+            border: 2px solid #333;
+            background: #fff;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .toggle-btn.active {
+            background: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="left-column">
+                <div class="box">Box 1</div>
+                <div class="box">Box 2</div>
+                <div class="toggle-buttons">
+                    <button class="toggle-btn" onclick="this.classList.toggle('active')">A</button>
+                    <button class="toggle-btn" onclick="this.classList.toggle('active')">B</button>
+                    <button class="toggle-btn" onclick="this.classList.toggle('active')">C</button>
+                </div>
+            </div>
+            <div class="right-column">
+                <div class="box">Box 3</div>
+                <div class="box">Box 4 (Larger)</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
