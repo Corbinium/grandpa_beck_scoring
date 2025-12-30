@@ -14,92 +14,118 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
             background: #f0f0f0;
         }
 
+        /* -------------------------
+        SCORE CONTAINER
+        -------------------------- */
 
         .score_container {
+            container-type: inline-size;
+
+            width: 300px;      /* ONLY hard size */
+            aspect-ratio: 17 / 10;
             border: 2px solid #333;
             background: white;
-            display: inline-block;
+
+            --u: 1cqw;         /* base unit = 1% of container width */
+            --border: calc(var(--u)*1.5);
+            --gap: calc(var(--u) * 2);
         }
+
+        /* -------------------------
+        LAYOUT
+        -------------------------- */
+
         .score_row {
             display: flex;
         }
+
         .score_column {
             display: flex;
             flex-direction: column;
         }
 
+        /* -------------------------
+        BOXES
+        -------------------------- */
 
-        .bid_box {
-            border: 2px solid #666;
-            width: 40px;
-            height: 40px;
-        }
+        .bid_box,
         .take_box {
-            border: 2px solid #666;
-            width: 40px;
-            height: 40px;
+            width: calc(var(--u) * 24);
+            aspect-ratio: 1 / 1;
+            border: var(--border) solid #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: calc(var(--u) * 15);
         }
-        .arrow_btn {
-            border: 2px solid #333;
-            width: 20px;
-            height: 20px;
-            background: #fff;
-            cursor: pointer;
-            transition: background 0.3s;
+
+        .bonus_box {
+            width: calc(var(--u) * 64);
+            height: calc(var(--u) * 20);
+            border: var(--border) solid #666;
+            display: flex;
+            align-items: center;
+            font-size: calc(var(--u) * 12);
         }
-        .arrow_btn:hover {
-            background: #e0e0e0;
+
+        .value_box {
+            width: calc(var(--u) * 54);
+            height: calc(var(--u) * 30);
+            margin: calc(var(--u) * 5);
+            border: var(--border) solid #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: calc(var(--u) * 20);
         }
-        .arrow_btn:active {
-            background: #009152;
-        }
-        .arrow_btn .material-symbols-outlined {
-            font-variation-settings:
-            'FILL' 0,
-            'wght' 400,
-            'GRAD' 0,
-            'opsz' 20;
-            font-size: 15px;
-        }
+
+        /* -------------------------
+        BUTTONS
+        -------------------------- */
+
+        .arrow_btn,
         .toggle-btn {
-            border: 2px solid #333;
-            width: 20px;
-            height: 20px;
+            width: calc(var(--u) * 12);
+            aspect-ratio: 1 / 1;
+            border: var(--border) solid #333;
             background: #fff;
             cursor: pointer;
-            transition: background 0.3s;
+            display: grid;
+            place-items: center;
         }
+
+        .arrow_btn:hover,
         .toggle-btn:hover {
             background: #e0e0e0;
         }
+
+        .arrow_btn:active {
+            background: #009152;
+        }
+
         .toggle-btn.active {
             background: #4CAF50;
             color: white;
         }
-        .toggle-btn .material-symbols-outlined {
+
+        /* -------------------------
+        ICONS
+        -------------------------- */
+
+        .material-symbols-outlined {
+            font-size: calc(var(--u) * 8);
             font-variation-settings:
-            'FILL' 0,
-            'wght' 400,
-            'GRAD' 0,
-            'opsz' 20;
-            font-size: 15px;
-        }
-        .bonus_box {
-            border: 2px solid #666;
-            width: 100px;
-            height: 20px;
-        }
-        .value_box {
-            border: 2px solid #666;
-            margin: 10px;
-            width: 80px;
-            height: 60px;
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 20;
         }
     </style>
 </head>
@@ -129,8 +155,8 @@
                 </div>
             </div>
             <div class="score_column">
-                <div class="bonus_box">Box 3</div>
-                <div class="value_box">Box 4 (Larger)</div>
+                <div class="bonus_box">000</div>
+                <div class="value_box">000</div>
             </div>
         </div>
     </div>
