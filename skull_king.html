@@ -5,104 +5,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skull King Score Card</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
             background: #f0f0f0;
         }
 
-        .container {
+
+        .score_container {
             border: 2px solid #333;
-            /* padding: 20px; */
             background: white;
             display: inline-block;
         }
-
-        .content {
+        .score_row {
             display: flex;
-            /* gap: 20px; */
         }
-
-        .left-column {
+        .score_column {
             display: flex;
             flex-direction: column;
-            /* gap: 10px; */
         }
 
-        .right-column {
-            display: flex;
-            flex-direction: column;
-            /* gap: 10px; */
-        }
 
-        .box {
+        .bid_box {
             border: 2px solid #666;
-            /* padding: 20px; */
-            background: #fafafa;
+            width: 40px;
+            height: 40px;
         }
-
-        .left-column .box {
-            width: 150px;
-            height: 100px;
+        .take_box {
+            border: 2px solid #666;
+            width: 40px;
+            height: 40px;
         }
-
-        .right-column .box:first-child {
-            width: 150px;
-            height: 80px;
-        }
-
-        .right-column .box:last-child {
-            width: 150px;
-            height: 140px;
-        }
-
-        .toggle-buttons {
-            display: flex;
-            /* gap: 10px; */
-            /* margin-top: 10px; */
-        }
-
-        .toggle-btn {
-            /* padding: 10px 20px; */
+        .arrow_btn {
             border: 2px solid #333;
+            width: 20px;
+            height: 20px;
             background: #fff;
             cursor: pointer;
             transition: background 0.3s;
         }
-
+        .arrow_btn:hover {
+            background: #e0e0e0;
+        }
+        .arrow_btn:active {
+            background: #009152;
+        }
+        .arrow_btn .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 20;
+            font-size: 15px;
+        }
+        .toggle-btn {
+            border: 2px solid #333;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
         .toggle-btn:hover {
             background: #e0e0e0;
         }
-
         .toggle-btn.active {
             background: #4CAF50;
             color: white;
+        }
+        .toggle-btn .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 20;
+            font-size: 15px;
+        }
+        .bonus_box {
+            border: 2px solid #666;
+            width: 100px;
+            height: 20px;
+        }
+        .value_box {
+            border: 2px solid #666;
+            margin: 10px;
+            width: 80px;
+            height: 60px;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="content">
-            <div class="left-column">
-                <div class="box">Box 1</div>
-                <div class="box">Box 2</div>
-                <div class="toggle-buttons">
-                    <button class="toggle-btn" onclick="this.classList.toggle('active')">A</button>
+    <div class="score_container">
+        <div class="score_row">
+            <div class="score_column">
+                <div class="score_row">
+                    <div class="bid_box">0</div>
+                    <div class="score_column">
+                        <button class="arrow_btn"><span class="material-symbols-outlined">keyboard_arrow_up</span></button>
+                        <button class="arrow_btn"><span class="material-symbols-outlined">keyboard_arrow_down</span></button>
+                    </div>
+                </div>
+                <div class="score_row">
+                    <div class="take_box">0</div>
+                    <div class="score_column">
+                        <button class="arrow_btn"><span class="material-symbols-outlined">keyboard_arrow_up</span></button>
+                        <button class="arrow_btn"><span class="material-symbols-outlined">keyboard_arrow_down</span></button>
+                    </div>
+                </div>
+                <div class="score_row">
+                    <button class="toggle-btn" onclick="this.classList.toggle('active')"><span class="material-symbols-outlined">handshake</span></button>
                     <button class="toggle-btn" onclick="this.classList.toggle('active')">B</button>
                     <button class="toggle-btn" onclick="this.classList.toggle('active')">C</button>
                 </div>
             </div>
-            <div class="right-column">
-                <div class="box">Box 3</div>
-                <div class="box">Box 4 (Larger)</div>
+            <div class="score_column">
+                <div class="bonus_box">Box 3</div>
+                <div class="value_box">Box 4 (Larger)</div>
             </div>
         </div>
     </div>
