@@ -23,16 +23,22 @@
         
 
         
+        .round_column {
+            container-type: inline-size;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid #333;
+            width: calc(var(--u)*53);
+            background: #333;
+        }
+
         .player_column {
             container-type: inline-size;
             display: flex;
             flex-direction: column;
             border: 2px solid #333;
-            width: 200px;
+            width: calc(var(--u)*103);
             background: #333;
-
-            --u: 1cqw;         /* base unit = 1% of container width */
-            --border: calc(var(--u)*1.5);
         }
         
         .score_container {
@@ -51,6 +57,12 @@
             border: 2px solid #333;
         }
 
+        .round_header_container {
+            container-type: inline-size;
+            width: calc(var(--u)*50);
+            border: 2px solid #333;
+        }
+
         .score_row {
             display: flex;
         }
@@ -66,7 +78,7 @@
         .take_box {
             width: calc(var(--u) * 24);
             aspect-ratio: 1 / 1;
-            border: var(--border) solid #666;
+            border: var(--u) solid #666;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -77,7 +89,7 @@
         .bonus_box {
             width: calc(var(--u) * 65);
             height: calc(var(--u) * 20);
-            border: var(--border) solid #666;
+            border: var(--u) solid #666;
             text-align: center;
             font-size: calc(var(--u) * 12);
             padding: calc(var(--u) * 2);
@@ -88,7 +100,7 @@
             width: calc(var(--u) * 54);
             height: calc(var(--u) * 30);
             margin: calc(var(--u) * 5);
-            border: var(--border) solid #666;
+            border: var(--u) solid #666;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -107,13 +119,45 @@
             border: 2px solid #333;
         }
 
+        .round_header_content {
+            background: #333;
+            color: white;
+            text-align: center;
+            justify-content: center;
+            height: calc(var(--u) * 20);
+            width: calc(var(--u) * 50);
+            font-size: calc(var(--u) * 8);
+            border: 2px solid #333;
+        }
+
+        .round_label_container {
+            container-type: inline-size;
+            width: calc(var(--u)*50);
+            height: calc(var(--u) * 60);
+            margin-top: 8px;
+            margin-bottom: 6px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: calc(var(--u) * 8);
+            font-weight: bold;
+            gap: calc(var(--u) * 4);
+        }
+
+        .round_checkbox {
+            width: calc(var(--u) * 10);
+            height: calc(var(--u) * 10);
+            cursor: pointer;
+        }
+
         
         
         .arrow_btn,
         .toggle-btn {
             width: calc(var(--u) * 12);
             aspect-ratio: 1 / 1;
-            border: var(--border) solid #333;
+            border: var(--u) solid #333;
             background: #fff;
             cursor: pointer;
             display: grid;
@@ -151,6 +195,8 @@
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
+            
+            --u: 2px;  /* Global unit - adjust this value to scale all columns */
         }
 
         .controls {
@@ -204,6 +250,34 @@
     </div>
 
     <script>
+        function createRoundColumn(numRounds) {
+            let roundLabels = '';
+            for (let i = 1; i <= numRounds; i++) {
+                roundLabels += `
+                    <div class="round_label_container">
+                        <input type="checkbox" class="round_checkbox" data-round="${i}" onchange="updateAllScoresForRound(${i})">
+                        <span>Round ${i}</span>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="round_column">
+                    <div class="round_header_container">
+                        <div class="round_header_content">
+                            Rounds
+                        </div>
+                    </div>
+                    ${roundLabels}
+                    <div class="header_footer_container">
+                        <div class="header_footer_content">
+                            &nbsp;
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         function createScoreContainer(roundNum) {
             return `
                 <div class="score_container" data-round="${roundNum}">
@@ -266,7 +340,7 @@
             const numRounds = parseInt(document.getElementById('numRounds').value);
             const gameSheet = document.getElementById('gameSheet');
 
-            let html = '';
+            let html = createRoundColumn(numRounds);
             for (let i = 1; i <= numPlayers; i++) {
                 html += createPlayerColumn(i, numRounds);
             }
@@ -294,6 +368,14 @@
             }
         }
 
+        function updateAllScoresForRound(roundNum) {
+            const scoreContainers = document.querySelectorAll(`.score_container[data-round="${roundNum}"]`);
+            scoreContainers.forEach(container => {
+                const bidBox = container.querySelector('.bid_box');
+                updateRoundScore(bidBox);
+            });
+        }
+
         function updateRoundScore(element) {
             const scoreContainer = element.closest('.score_container');
             const bidBox = scoreContainer.querySelector('.bid_box');
@@ -306,10 +388,19 @@
             const bonus = parseInt(bonusBox.value) || 0;
             const roundNum = parseInt(scoreContainer.dataset.round);
             
+            // Check if round checkbox is checked
+            const roundCheckbox = document.querySelector(`.round_checkbox[data-round="${roundNum}"]`);
+            const isRoundChecked = roundCheckbox ? roundCheckbox.checked : false;
+            
             // Simple scoring logic - adjust as needed for Skull King rules
             let score = 0;
-            if (bid === 0 && take !== 0) {
-                score = roundNum * -10;
+            if (bid === 0) {
+                if (take !== 0){
+                    score = roundNum * -10;
+                }
+                else if (isRoundChecked) {
+                    score = roundNum * 10;
+                }
             } else if (bid === take) {
                 score = take * 20;
             } else {
