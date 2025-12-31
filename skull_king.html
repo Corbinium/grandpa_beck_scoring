@@ -20,27 +20,36 @@
             padding: 20px;
             background: #f0f0f0;
         }
+        
 
-        /* -------------------------
-        SCORE CONTAINER
-        -------------------------- */
-
-        .score_container {
+        
+        .player_column {
             container-type: inline-size;
-
-            width: 300px;      /* ONLY hard size */
-            aspect-ratio: 17 / 10;
+            display: flex;
+            flex-direction: column;
             border: 2px solid #333;
-            background: white;
+            width: 200px;
+            background: #333;
 
             --u: 1cqw;         /* base unit = 1% of container width */
             --border: calc(var(--u)*1.5);
-            --gap: calc(var(--u) * 2);
+        }
+        
+        .score_container {
+            container-type: inline-size;
+            width: calc(var(--u)*100);
+            aspect-ratio: 17 / 10;
+            border: 2px solid #333;
+            background: #333;
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
 
-        /* -------------------------
-        LAYOUT
-        -------------------------- */
+        .header_footer_container {
+            container-type: inline-size;
+            width: calc(var(--u)*100);
+            border: 2px solid #333;
+        }
 
         .score_row {
             display: flex;
@@ -51,10 +60,8 @@
             flex-direction: column;
         }
 
-        /* -------------------------
-        BOXES
-        -------------------------- */
-
+        
+        
         .bid_box,
         .take_box {
             width: calc(var(--u) * 24);
@@ -64,15 +71,17 @@
             align-items: center;
             justify-content: center;
             font-size: calc(var(--u) * 15);
+            background: white;
         }
 
         .bonus_box {
-            width: calc(var(--u) * 64);
+            width: calc(var(--u) * 65);
             height: calc(var(--u) * 20);
             border: var(--border) solid #666;
-            display: flex;
-            align-items: center;
+            text-align: center;
             font-size: calc(var(--u) * 12);
+            padding: calc(var(--u) * 2);
+            background: white;
         }
 
         .value_box {
@@ -84,12 +93,22 @@
             align-items: center;
             justify-content: center;
             font-size: calc(var(--u) * 20);
+            background: white;
         }
 
-        /* -------------------------
-        BUTTONS
-        -------------------------- */
+        .header_footer_content {
+            background: #333;
+            color: white;
+            text-align: center;
+            justify-content: center;
+            height: calc(var(--u) * 20);
+            width: calc(var(--u) * 100);
+            font-size: calc(var(--u) * 15);
+            border: 2px solid #333;
+        }
 
+        
+        
         .arrow_btn,
         .toggle-btn {
             width: calc(var(--u) * 12);
@@ -115,10 +134,8 @@
             color: white;
         }
 
-        /* -------------------------
-        ICONS
-        -------------------------- */
-
+        
+        
         .material-symbols-outlined {
             font-size: calc(var(--u) * 8);
             font-variation-settings:
@@ -127,39 +144,198 @@
                 'GRAD' 0,
                 'opsz' 20;
         }
+
+
+
+        .game_sheet {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .controls {
+            width: 100%;
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #333;
+            border-radius: 8px;
+        }
+
+        .controls label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .controls input {
+            margin-right: 20px;
+            padding: 5px;
+            width: 60px;
+        }
+
+        .controls button {
+            padding: 8px 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .controls button:hover {
+            background: #45a049;
+        }
     </style>
 </head>
 
 <body>
-    <div class="score_container">
-        <div class="score_row">
-            <div class="score_column">
-                <div class="score_row">
-                    <div class="bid_box">0</div>
-                    <div class="score_column">
-                        <button class="arrow_btn"><span class="material-symbols-outlined">keyboard_arrow_up</span></button>
-                        <button class="arrow_btn"><span class="material-symbols-outlined">keyboard_arrow_down</span></button>
-                    </div>
-                </div>
-                <div class="score_row">
-                    <div class="take_box">0</div>
-                    <div class="score_column">
-                        <button class="arrow_btn"><span class="material-symbols-outlined">keyboard_arrow_up</span></button>
-                        <button class="arrow_btn"><span class="material-symbols-outlined">keyboard_arrow_down</span></button>
-                    </div>
-                </div>
-                <div class="score_row">
-                    <button class="toggle-btn" onclick="this.classList.toggle('active')"><span class="material-symbols-outlined">handshake</span></button>
-                    <button class="toggle-btn" onclick="this.classList.toggle('active')">B</button>
-                    <button class="toggle-btn" onclick="this.classList.toggle('active')">C</button>
-                </div>
-            </div>
-            <div class="score_column">
-                <div class="bonus_box">000</div>
-                <div class="value_box">000</div>
-            </div>
-        </div>
+    <div class="controls">
+        <label for="numPlayers">Number of Players:</label>
+        <input type="number" id="numPlayers" min="1" max="8" value="3">
+        
+        <label for="numRounds">Number of Rounds:</label>
+        <input type="number" id="numRounds" min="1" max="10" value="5">
+        
+        <button onclick="generateGameSheet()">Generate Game Sheet</button>
     </div>
+
+    <div class="game_sheet" id="gameSheet">
+    </div>
+
+    <script>
+        function createScoreContainer(roundNum) {
+            return `
+                <div class="score_container">
+                    <div class="score_row">
+                        <div class="score_column">
+                            <div class="score_row">
+                                <div class="bid_box">0</div>
+                                <div class="score_column">
+                                    <button class="arrow_btn" onclick="incrementValue(this, 'bid')"><span class="material-symbols-outlined">keyboard_arrow_up</span></button>
+                                    <button class="arrow_btn" onclick="decrementValue(this, 'bid')"><span class="material-symbols-outlined">keyboard_arrow_down</span></button>
+                                </div>
+                            </div>
+                            <div class="score_row">
+                                <div class="take_box">0</div>
+                                <div class="score_column">
+                                    <button class="arrow_btn" onclick="incrementValue(this, 'take')"><span class="material-symbols-outlined">keyboard_arrow_up</span></button>
+                                    <button class="arrow_btn" onclick="decrementValue(this, 'take')"><span class="material-symbols-outlined">keyboard_arrow_down</span></button>
+                                </div>
+                            </div>
+                            <div class="score_row">
+                                <button class="toggle-btn" onclick="this.classList.toggle('active')"><span class="material-symbols-outlined">handshake</span></button>
+                                <button class="toggle-btn" onclick="this.classList.toggle('active')">B</button>
+                                <button class="toggle-btn" onclick="this.classList.toggle('active')">C</button>
+                            </div>
+                        </div>
+                        <div class="score_column">
+                            <input type="number" class="bonus_box" value="0" oninput="updateRoundScore(this)">
+                            <div class="value_box">0</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createPlayerColumn(playerNum, numRounds) {
+            let scoreContainers = '';
+            for (let i = 1; i <= numRounds; i++) {
+                scoreContainers += createScoreContainer(i);
+            }
+
+            return `
+                <div class="player_column">
+                    <div class="header_footer_container">
+                        <div class="header_footer_content">
+                            Player ${playerNum}
+                        </div>
+                    </div>
+                    ${scoreContainers}
+                    <div class="header_footer_container">
+                        <div class="header_footer_content total_score">
+                            0
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateGameSheet() {
+            const numPlayers = parseInt(document.getElementById('numPlayers').value);
+            const numRounds = parseInt(document.getElementById('numRounds').value);
+            const gameSheet = document.getElementById('gameSheet');
+
+            let html = '';
+            for (let i = 1; i <= numPlayers; i++) {
+                html += createPlayerColumn(i, numRounds);
+            }
+
+            gameSheet.innerHTML = html;
+        }
+
+        function incrementValue(button, type) {
+            const container = button.closest('.score_row');
+            const box = container.querySelector(type === 'bid' ? '.bid_box' : '.take_box');
+            let value = parseInt(box.textContent);
+            value++;
+            box.textContent = value;
+            updateRoundScore(button);
+        }
+
+        function decrementValue(button, type) {
+            const container = button.closest('.score_row');
+            const box = container.querySelector(type === 'bid' ? '.bid_box' : '.take_box');
+            let value = parseInt(box.textContent);
+            if (value > 0) {
+                value--;
+                box.textContent = value;
+                updateRoundScore(button);
+            }
+        }
+
+        function updateRoundScore(element) {
+            const scoreContainer = element.closest('.score_container');
+            const bidBox = scoreContainer.querySelector('.bid_box');
+            const takeBox = scoreContainer.querySelector('.take_box');
+            const bonusBox = scoreContainer.querySelector('.bonus_box');
+            const valueBox = scoreContainer.querySelector('.value_box');
+            
+            const bid = parseInt(bidBox.textContent);
+            const take = parseInt(takeBox.textContent);
+            const bonus = parseInt(bonusBox.value) || 0;
+            
+            // Simple scoring logic - adjust as needed for Skull King rules
+            let score = 0;
+            if (bid === take) {
+                score = take * 20;
+            } else {
+                score = Math.abs(bid - take) * -10;
+            }
+            
+            // Add bonus to the score
+            score += bonus;
+            
+            valueBox.textContent = score;
+            updateTotalScore(element);
+        }
+
+        function updateTotalScore(element) {
+            const playerColumn = element.closest('.player_column');
+            const valueBoxes = playerColumn.querySelectorAll('.value_box');
+            const totalBox = playerColumn.querySelector('.total_score');
+            
+            let total = 0;
+            valueBoxes.forEach(box => {
+                total += parseInt(box.textContent) || 0;
+            });
+            
+            totalBox.textContent = total;
+        }
+
+        // Generate initial game sheet on load
+        generateGameSheet();
+    </script>
 </body>
 
 </html>
