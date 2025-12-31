@@ -206,7 +206,7 @@
     <script>
         function createScoreContainer(roundNum) {
             return `
-                <div class="score_container">
+                <div class="score_container" data-round="${roundNum}">
                     <div class="score_row">
                         <div class="score_column">
                             <div class="score_row">
@@ -304,10 +304,13 @@
             const bid = parseInt(bidBox.textContent);
             const take = parseInt(takeBox.textContent);
             const bonus = parseInt(bonusBox.value) || 0;
+            const roundNum = parseInt(scoreContainer.dataset.round);
             
             // Simple scoring logic - adjust as needed for Skull King rules
             let score = 0;
-            if (bid === take) {
+            if (bid === 0 && take !== 0) {
+                score = roundNum * -10;
+            } else if (bid === take) {
                 score = take * 20;
             } else {
                 score = Math.abs(bid - take) * -10;
