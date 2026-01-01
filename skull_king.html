@@ -18,7 +18,7 @@
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
-            background: #f0f0f0;
+            background: #333333;
         }
         
 
@@ -27,40 +27,34 @@
             container-type: inline-size;
             display: flex;
             flex-direction: column;
-            border: 2px solid #333;
             width: calc(var(--u)*53);
-            background: #333;
         }
 
         .player_column {
             container-type: inline-size;
             display: flex;
             flex-direction: column;
-            border: 2px solid #333;
-            width: calc(var(--u)*103);
-            background: #333;
+            border: 2px solid #dbb300;
+            width: calc(var(--u)*104);
         }
         
         .score_container {
             container-type: inline-size;
-            width: calc(var(--u)*100);
-            aspect-ratio: 17 / 10;
-            border: 2px solid #333;
-            background: #333;
+            display: flex;
             margin-top: 5px;
             margin-bottom: 5px;
         }
 
         .header_footer_container {
             container-type: inline-size;
-            width: calc(var(--u)*100);
-            border: 2px solid #333;
+            display: flex;
+            border: 2px solid #dbb300;
         }
 
         .round_header_container {
             container-type: inline-size;
             width: calc(var(--u)*50);
-            border: 2px solid #333;
+            padding-top: 12px;
         }
 
         .score_row {
@@ -78,45 +72,44 @@
         .take_box {
             width: calc(var(--u) * 24);
             aspect-ratio: 1 / 1;
-            border: var(--u) solid #666;
+            border: var(--u) solid black;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: calc(var(--u) * 15);
-            background: white;
+            background: #ebd5b3;
         }
 
         .bonus_box {
             width: calc(var(--u) * 65);
             height: calc(var(--u) * 20);
-            border: var(--u) solid #666;
+            border: var(--u) solid black;
             text-align: center;
             font-size: calc(var(--u) * 12);
             padding: calc(var(--u) * 2);
-            background: white;
+            background: #ebd5b3;
         }
 
         .value_box {
             width: calc(var(--u) * 54);
             height: calc(var(--u) * 30);
             margin: calc(var(--u) * 5);
-            border: var(--u) solid #666;
+            border: var(--u) solid black;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: calc(var(--u) * 20);
-            background: white;
+            background: #dbb172;
         }
 
         .header_footer_content {
-            background: #333;
-            color: white;
+            color: #dbb300;
+            display: flex;
             text-align: center;
             justify-content: center;
             height: calc(var(--u) * 20);
             width: calc(var(--u) * 100);
             font-size: calc(var(--u) * 15);
-            border: 2px solid #333;
         }
 
         .round_header_content {
@@ -132,10 +125,9 @@
 
         .round_label_container {
             container-type: inline-size;
-            width: calc(var(--u)*50);
-            height: calc(var(--u) * 60);
-            margin-top: 8px;
-            margin-bottom: 6px;
+            height: calc(var(--u) * 20);
+            margin-top: 28px;
+            margin-bottom: 62px;
             color: white;
             display: flex;
             align-items: center;
@@ -157,25 +149,25 @@
         .toggle-btn {
             width: calc(var(--u) * 12);
             aspect-ratio: 1 / 1;
-            border: var(--u) solid #333;
-            background: #fff;
+            border: var(--u) solid black;
+            background: #666666;
             cursor: pointer;
             display: grid;
             place-items: center;
+            color: white;
         }
 
         .arrow_btn:hover,
         .toggle-btn:hover {
-            background: #e0e0e0;
+            background: #999999;
         }
 
         .arrow_btn:active {
-            background: #009152;
+            background: #BBBBBB;
         }
 
         .toggle-btn.active {
             background: #4CAF50;
-            color: white;
         }
 
         
@@ -201,11 +193,12 @@
 
         .controls {
             width: 100%;
-            background: white;
+            background: #333333;
             padding: 20px;
             margin-bottom: 20px;
-            border: 2px solid #333;
+            border: 2px solid #999999;
             border-radius: 8px;
+            color: white;
         }
 
         .controls label {
@@ -241,7 +234,7 @@
         <input type="number" id="numPlayers" min="1" max="8" value="3">
         
         <label for="numRounds">Number of Rounds:</label>
-        <input type="number" id="numRounds" min="1" max="10" value="5">
+        <input type="number" id="numRounds" min="1" max="10" value="10">
         
         <button onclick="generateGameSheet()">Generate Game Sheet</button>
     </div>
@@ -269,11 +262,6 @@
                         </div>
                     </div>
                     ${roundLabels}
-                    <div class="header_footer_container">
-                        <div class="header_footer_content">
-                            &nbsp;
-                        </div>
-                    </div>
                 </div>
             `;
         }
