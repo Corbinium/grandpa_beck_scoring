@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Setup</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #333333;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .setup-container {
+            background: #444444;
+            padding: 40px;
+            border-radius: 8px;
+            border: 2px solid #dbb300;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #dbb300;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .input-section {
+            margin-bottom: 20px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #666666;
+            border-radius: 4px;
+            background: #555555;
+            color: white;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #dbb300;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .add-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .add-btn:hover {
+            background: #45a049;
+        }
+
+        .remove-btn {
+            background: #f44336;
+            color: white;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        .remove-btn:hover {
+            background: #da190b;
+        }
+
+        .players-list {
+            margin-bottom: 20px;
+            min-height: 100px;
+        }
+
+        .player-item {
+            background: #555555;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #666666;
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 15px;
+            background: #dbb300;
+            color: #333333;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .start-btn:hover {
+            background: #c9a200;
+        }
+
+        .start-btn:disabled {
+            background: #666666;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .error-message {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="setup-container">
+        <h1>Game Setup</h1>
+        
+        <div class="input-section">
+            <div class="input-row">
+                <input type="text" id="playerNameInput" placeholder="Enter player name" 
+                       onkeypress="if(event.key==='Enter') addPlayer()">
+                <button class="add-btn" onclick="addPlayer()">Add Player</button>
+            </div>
+            <div id="errorMessage" class="error-message"></div>
+        </div>
+
+        <div class="players-list" id="playersList">
+            <p style="color: #999999; text-align: center;">No players added yet</p>
+        </div>
+
+        <button class="start-btn" id="startBtn" onclick="startSkullKing()" disabled>Start Skull King</button>
+    </div>
+
+    <script>
+        let players = [];
+
+        function addPlayer() {
+            const input = document.getElementById('playerNameInput');
+            const playerName = input.value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Clear previous error
+            errorMessage.textContent = '';
+
+            if (!playerName) {
+                errorMessage.textContent = 'Please enter a player name';
+                return;
+            }
+
+            if (players.includes(playerName)) {
+                errorMessage.textContent = 'Player name already exists';
+                return;
+            }
+
+            players.push(playerName);
+            input.value = '';
+            updatePlayersList();
+        }
+
+        function removePlayer(index) {
+            players.splice(index, 1);
+            updatePlayersList();
+        }
+
+        function updatePlayersList() {
+            const listContainer = document.getElementById('playersList');
+            const startBtn = document.getElementById('startBtn');
+
+            if (players.length === 0) {
+                listContainer.innerHTML = '<p style="color: #999999; text-align: center;">No players added yet</p>';
+            } else {
+                if (players.length < 2) {
+                    startBtn.disabled = true;
+                } else {
+                    startBtn.disabled = false;
+                }
+                listContainer.innerHTML = players.map((player, index) => `
+                    <div class="player-item">
+                        <span>${player}</span>
+                        <button class="remove-btn" onclick="removePlayer(${index})">Remove</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function startSkullKing() {
+            if (players.length < 2) {
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.textContent = 'Add at least two players to start the game.';
+                return;
+            }
+
+            // Create URL with players query parameter
+            const playersParam = encodeURIComponent(players.join(','));
+            window.location.href = `skull_king.html?players=${playersParam}`;
+        }
+
+        // Focus on input when page loads
+        document.getElementById('playerNameInput').focus();
+    </script>
+</body>
+
+</html>

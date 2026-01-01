@@ -17,8 +17,17 @@
 
         body {
             font-family: Arial, sans-serif;
-            padding: 20px;
             background: #333333;
+        }
+
+        .game_sheet {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            overflow-y: visible;
+            padding: 20px 10px 20px 10px;
+            
+            --u: 2px;  /* Global unit - adjust this value to scale all columns */
         }
         
 
@@ -28,33 +37,35 @@
             display: flex;
             flex-direction: column;
             width: calc(var(--u)*53);
+            flex-shrink: 0;
         }
 
         .player_column {
             container-type: inline-size;
             display: flex;
             flex-direction: column;
-            border: 2px solid #dbb300;
+            border: var(--u) solid #dbb300;
             width: calc(var(--u)*104);
+            flex-shrink: 0;
         }
         
         .score_container {
             container-type: inline-size;
             display: flex;
-            margin-top: 5px;
-            margin-bottom: 5px;
+            margin-top: calc(var(--u)*2);
+            margin-bottom: calc(var(--u)*2);
         }
 
         .header_footer_container {
             container-type: inline-size;
             display: flex;
-            border: 2px solid #dbb300;
+            border: var(--u) solid #dbb300;
         }
 
         .round_header_container {
             container-type: inline-size;
             width: calc(var(--u)*50);
-            padding-top: 12px;
+            padding-top: calc(var(--u)*6);
         }
 
         .score_row {
@@ -120,14 +131,14 @@
             height: calc(var(--u) * 20);
             width: calc(var(--u) * 50);
             font-size: calc(var(--u) * 8);
-            border: 2px solid #333;
+            border: var(--u) solid #333;
         }
 
         .round_label_container {
             container-type: inline-size;
             height: calc(var(--u) * 20);
-            margin-top: 28px;
-            margin-bottom: 62px;
+            margin-top: calc(var(--u)*14);
+            margin-bottom: calc(var(--u)*30);
             color: white;
             display: flex;
             align-items: center;
@@ -183,14 +194,6 @@
 
 
 
-        .game_sheet {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            
-            --u: 2px;  /* Global unit - adjust this value to scale all columns */
-        }
-
         .controls {
             width: 100%;
             background: #333333;
@@ -229,16 +232,6 @@
 </head>
 
 <body>
-    <div class="controls">
-        <label for="numPlayers">Number of Players:</label>
-        <input type="number" id="numPlayers" min="1" max="8" value="3">
-        
-        <label for="numRounds">Number of Rounds:</label>
-        <input type="number" id="numRounds" min="1" max="10" value="10">
-        
-        <button onclick="generateGameSheet()">Generate Game Sheet</button>
-    </div>
-
     <div class="game_sheet" id="gameSheet">
     </div>
 
@@ -300,7 +293,7 @@
             `;
         }
 
-        function createPlayerColumn(playerNum, numRounds) {
+        function createPlayerColumn(playerName, numRounds) {
             let scoreContainers = '';
             for (let i = 1; i <= numRounds; i++) {
                 scoreContainers += createScoreContainer(i);
@@ -310,7 +303,7 @@
                 <div class="player_column">
                     <div class="header_footer_container">
                         <div class="header_footer_content">
-                            Player ${playerNum}
+                            ${playerName}
                         </div>
                     </div>
                     ${scoreContainers}
@@ -324,13 +317,18 @@
         }
 
         function generateGameSheet() {
-            const numPlayers = parseInt(document.getElementById('numPlayers').value);
-            const numRounds = parseInt(document.getElementById('numRounds').value);
+            const urlParams = new URLSearchParams(window.location.search);
+            const playersParam = urlParams.get('players');
+            const players = playersParam 
+                ? playersParam.split(',').map(p => p.trim())
+                : ["Player 1", "Player 2", "Player 3"];
+            
+            const numRounds = 10;
             const gameSheet = document.getElementById('gameSheet');
 
             let html = createRoundColumn(numRounds);
-            for (let i = 1; i <= numPlayers; i++) {
-                html += createPlayerColumn(i, numRounds);
+            for (let p of players) {
+                html += createPlayerColumn(p, numRounds);
             }
 
             gameSheet.innerHTML = html;
