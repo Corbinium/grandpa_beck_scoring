@@ -13,31 +13,84 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+
+            --u: 2px;
         }
 
         body {
             font-family: Arial, sans-serif;
             background: #333333;
+            overflow: hidden;
         }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .scrollable_wrapper {
+            flex: 1;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content_wrapper {
+            display: inline-flex;
+            flex-direction: column;
+            min-width: min-content;
+        }
+
+
 
         .game_sheet {
             display: flex;
             gap: 20px;
-            overflow-x: auto;
-            overflow-y: visible;
-            padding: 20px 10px 20px 10px;
-            
-            --u: 2px;  /* Global unit - adjust this value to scale all columns */
+            flex: 1;
         }
         
 
         
+        .header {
+            display: flex;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            background: #333;
+            text-align: center;
+            z-index: 100;
+            padding-left: calc(var(--u) * 45);
+        }
+
+        .footer {
+            display: flex;
+            gap: 20px;
+            position: sticky;
+            bottom: 0;
+            background: #333;
+            text-align: center;
+            z-index: 100;
+            padding-left: calc(var(--u) * 45);
+        }
+
         .round_column {
             container-type: inline-size;
             display: flex;
             flex-direction: column;
-            width: calc(var(--u)*53);
+            width: calc(var(--u)*35);
             flex-shrink: 0;
+            position: sticky;
+            left: 0;
+            background: #333;
+            color: white;
+            font-weight: bold;
+            font-size: calc(var(--u) * 10);
+            text-align: right;
+            gap: calc(var(--u) * 64);
+            padding-top: calc(var(--u) * 20);
+            padding-right: calc(var(--u) * 5);
         }
 
         .player_column {
@@ -47,25 +100,12 @@
             border: var(--u) solid #dbb300;
             width: calc(var(--u)*104);
             flex-shrink: 0;
+            gap: calc(var(--u)*10);
         }
         
         .score_container {
             container-type: inline-size;
             display: flex;
-            margin-top: calc(var(--u)*2);
-            margin-bottom: calc(var(--u)*2);
-        }
-
-        .header_footer_container {
-            container-type: inline-size;
-            display: flex;
-            border: var(--u) solid #dbb300;
-        }
-
-        .round_header_container {
-            container-type: inline-size;
-            width: calc(var(--u)*50);
-            padding-top: calc(var(--u)*6);
         }
 
         .score_row {
@@ -75,6 +115,31 @@
         .score_column {
             display: flex;
             flex-direction: column;
+        }
+
+
+
+        .player_header {
+            color: #dbb300;
+            font-size: calc(var(--u) * 20);
+            text-align: center;
+            height: calc(var(--u) * 30);
+            width: calc(var(--u) * 104);
+            border: var(--u) solid #dbb300;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score_footer {
+            color: #dbb300;
+            font-size: calc(var(--u) * 20);
+            text-align: center;
+            height: calc(var(--u) * 30);
+            width: calc(var(--u) * 104);
+            border: var(--u) solid #dbb300;
+            flex-shrink: 0;
         }
 
         
@@ -92,18 +157,17 @@
         }
 
         .bonus_box {
-            width: calc(var(--u) * 65);
+            width: calc(var(--u) * 66);
             height: calc(var(--u) * 20);
             border: var(--u) solid black;
             text-align: center;
             font-size: calc(var(--u) * 12);
-            padding: calc(var(--u) * 2);
             background: #ebd5b3;
         }
 
         .value_box {
-            width: calc(var(--u) * 54);
-            height: calc(var(--u) * 30);
+            width: calc(var(--u) * (68 - 5*2));
+            height: calc(var(--u) * (45 - 10));
             margin: calc(var(--u) * 5);
             border: var(--u) solid black;
             display: flex;
@@ -112,54 +176,21 @@
             font-size: calc(var(--u) * 20);
             background: #dbb172;
         }
-
-        .header_footer_content {
-            color: #dbb300;
-            display: flex;
-            text-align: center;
-            justify-content: center;
-            height: calc(var(--u) * 20);
-            width: calc(var(--u) * 100);
-            font-size: calc(var(--u) * 15);
-        }
-
-        .round_header_content {
-            background: #333;
-            color: white;
-            text-align: center;
-            justify-content: center;
-            height: calc(var(--u) * 20);
-            width: calc(var(--u) * 50);
-            font-size: calc(var(--u) * 8);
-            border: var(--u) solid #333;
-        }
-
-        .round_label_container {
-            container-type: inline-size;
-            height: calc(var(--u) * 20);
-            margin-top: calc(var(--u)*14);
-            margin-bottom: calc(var(--u)*30);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: calc(var(--u) * 8);
-            font-weight: bold;
-            gap: calc(var(--u) * 4);
-        }
-
-        .round_checkbox {
-            width: calc(var(--u) * 10);
-            height: calc(var(--u) * 10);
-            cursor: pointer;
-        }
-
         
-        
-        .arrow_btn,
-        .toggle-btn {
+        .arrow_btn {
             width: calc(var(--u) * 12);
             aspect-ratio: 1 / 1;
+            border: var(--u) solid black;
+            background: #666666;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            color: white;
+        }
+
+        .toggle-btn {
+            width: calc(var(--u) * 24);
+            aspect-ratio: 2 / 1;
             border: var(--u) solid black;
             background: #666666;
             cursor: pointer;
@@ -178,7 +209,8 @@
         }
 
         .toggle-btn.active {
-            background: #4CAF50;
+            background: #dbb300;
+            color: black;
         }
 
         
@@ -191,72 +223,52 @@
                 'GRAD' 0,
                 'opsz' 20;
         }
-
-
-
-        .controls {
-            width: 100%;
-            background: #333333;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 2px solid #999999;
-            border-radius: 8px;
-            color: white;
-        }
-
-        .controls label {
-            margin-right: 10px;
-            font-weight: bold;
-        }
-
-        .controls input {
-            margin-right: 20px;
-            padding: 5px;
-            width: 60px;
-        }
-
-        .controls button {
-            padding: 8px 16px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .controls button:hover {
-            background: #45a049;
-        }
     </style>
 </head>
 
 <body>
-    <div class="game_sheet" id="gameSheet">
+    <div class="container">
+        <div class="scrollable_wrapper">
+            <div class="content_wrapper">
+                <div class="header" id="header"></div>
+                <div class="game_sheet" id="gameSheet"></div>
+                <div class="footer" id="footer"></div>
+            </div>
+        </div>
     </div>
 
     <script>
+        function createPlayerHeaders(playerNames) {
+            let html = ``;
+            for (let name of playerNames) {
+                html += `
+                    <div class="player_header player_${name.replace(/\s+/g, '_')}">${name}</div>
+                `;
+            }
+            return html;
+        }
+
+        function createPlayerFooters(playerNames) {
+            let html = ``;
+            for (let name of playerNames) {
+                html += `
+                    <div class="score_footer player_${name.replace(/\s+/g, '_')}">
+                        <span class="total_score">0</span>
+                    </div>
+                `;
+            }
+            return html;
+        }
+
         function createRoundColumn(numRounds) {
             let roundLabels = '';
             for (let i = 1; i <= numRounds; i++) {
                 roundLabels += `
-                    <div class="round_label_container">
-                        <input type="checkbox" class="round_checkbox" data-round="${i}" onchange="updateAllScoresForRound(${i})">
-                        <span>Round ${i}</span>
-                    </div>
+                    <div class="round_label_container" data-round="${i}">0/${i}</div>
                 `;
             }
 
-            return `
-                <div class="round_column">
-                    <div class="round_header_container">
-                        <div class="round_header_content">
-                            Rounds
-                        </div>
-                    </div>
-                    ${roundLabels}
-                </div>
-            `;
+            return `<div class="round_column" id="round_column">${roundLabels}</div>`;
         }
 
         function createScoreContainer(roundNum) {
@@ -279,9 +291,7 @@
                                 </div>
                             </div>
                             <div class="score_row">
-                                <button class="toggle-btn" onclick="this.classList.toggle('active')"><span class="material-symbols-outlined">handshake</span></button>
-                                <button class="toggle-btn" onclick="this.classList.toggle('active')">B</button>
-                                <button class="toggle-btn" onclick="this.classList.toggle('active')">C</button>
+                                <button class="toggle-btn zero-bid" onclick="this.classList.toggle('active'); updateRoundScore(this);">Z</button>
                             </div>
                         </div>
                         <div class="score_column">
@@ -300,18 +310,8 @@
             }
 
             return `
-                <div class="player_column">
-                    <div class="header_footer_container">
-                        <div class="header_footer_content">
-                            ${playerName}
-                        </div>
-                    </div>
+                <div class="player_column player_${playerName.replace(/\s+/g, '_')}">
                     ${scoreContainers}
-                    <div class="header_footer_container">
-                        <div class="header_footer_content total_score">
-                            0
-                        </div>
-                    </div>
                 </div>
             `;
         }
@@ -324,9 +324,14 @@
                 : ["Player 1", "Player 2", "Player 3"];
             
             const numRounds = 10;
+            const header = document.getElementById('header');
+            const footer = document.getElementById('footer');
             const gameSheet = document.getElementById('gameSheet');
+            
+            header.innerHTML = createPlayerHeaders(players);
+            footer.innerHTML = createPlayerFooters(players);
 
-            let html = createRoundColumn(numRounds);
+            let html = createRoundColumn(numRounds);;
             for (let p of players) {
                 html += createPlayerColumn(p, numRounds);
             }
@@ -341,6 +346,9 @@
             value++;
             box.textContent = value;
             updateRoundScore(button);
+            if (type === 'take') {
+                updateRoundBids(button);
+            }
         }
 
         function decrementValue(button, type) {
@@ -351,50 +359,64 @@
                 value--;
                 box.textContent = value;
                 updateRoundScore(button);
+                if (type === 'take') {
+                    updateRoundBids(button);
+                }
             }
         }
 
-        function updateAllScoresForRound(roundNum) {
+        function updateRoundBids(element) {
+            const roundColumn = document.getElementById('round_column');
+            const roundNum = parseInt(element.closest('.score_container').dataset.round);
+            
+            // Get all score containers for this round
             const scoreContainers = document.querySelectorAll(`.score_container[data-round="${roundNum}"]`);
+            
+            // Sum up all takes for this round
+            let totalTakes = 0;
             scoreContainers.forEach(container => {
-                const bidBox = container.querySelector('.bid_box');
-                updateRoundScore(bidBox);
+                const takeBox = container.querySelector('.take_box');
+                totalTakes += parseInt(takeBox.textContent) || 0;
             });
+            
+            // Update the round label
+            const roundLabel = roundColumn.querySelector(`.round_label_container[data-round="${roundNum}"]`);
+            if (roundLabel) {
+                roundLabel.textContent = `${totalTakes}/${roundNum}`;
+            }
         }
-
+        
         function updateRoundScore(element) {
             const scoreContainer = element.closest('.score_container');
             const bidBox = scoreContainer.querySelector('.bid_box');
             const takeBox = scoreContainer.querySelector('.take_box');
             const bonusBox = scoreContainer.querySelector('.bonus_box');
             const valueBox = scoreContainer.querySelector('.value_box');
+            const zeroButton = scoreContainer.querySelector('.zero-bid');
             
             const bid = parseInt(bidBox.textContent);
             const take = parseInt(takeBox.textContent);
             const bonus = parseInt(bonusBox.value) || 0;
             const roundNum = parseInt(scoreContainer.dataset.round);
             
-            // Check if round checkbox is checked
-            const roundCheckbox = document.querySelector(`.round_checkbox[data-round="${roundNum}"]`);
-            const isRoundChecked = roundCheckbox ? roundCheckbox.checked : false;
-            
-            // Simple scoring logic - adjust as needed for Skull King rules
             let score = 0;
             if (bid === 0) {
-                if (take !== 0){
-                    score = roundNum * -10;
+                if (zeroButton.classList.contains('active')) {
+                    if (take === 0) {
+                        score = 10 * roundNum;
+                        score += bonus;
+                    } else {
+                        score = -10 * roundNum;
+                    }
                 }
-                else if (isRoundChecked) {
-                    score = roundNum * 10;
-                }
-            } else if (bid === take) {
-                score = take * 20;
             } else {
-                score = Math.abs(bid - take) * -10;
+                if (bid === take) {
+                    score = bid * 20;
+                    score += bonus;
+                } else {
+                    score = -10 * Math.abs(bid - take);
+                }
             }
-            
-            // Add bonus to the score
-            score += bonus;
             
             valueBox.textContent = score;
             updateTotalScore(element);
@@ -403,7 +425,13 @@
         function updateTotalScore(element) {
             const playerColumn = element.closest('.player_column');
             const valueBoxes = playerColumn.querySelectorAll('.value_box');
-            const totalBox = playerColumn.querySelector('.total_score');
+            
+            // Find the player class (not player_column)
+            const classes = playerColumn.className.split(' ');
+            const playerClass = classes.find(c => c.startsWith('player_') && c !== 'player_column');
+
+            const footer = document.getElementById('footer');
+            const totalBox = footer.querySelector(`.${playerClass} .total_score`);
             
             let total = 0;
             valueBoxes.forEach(box => {
@@ -413,7 +441,6 @@
             totalBox.textContent = total;
         }
 
-        // Generate initial game sheet on load
         generateGameSheet();
     </script>
 </body>
