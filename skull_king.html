@@ -15,11 +15,22 @@
             box-sizing: border-box;
 
             --u: 2px;
+            --main: #333333;
+            --main-accent: #dbb300;
+            --main-highlight: #e8c520;
+            --primary: #ebd5b3;
+            --primary-accent: #000000;
+            --secondary: #dbb172;
+            --secondary-accent: #000000;
+            --tertiary: #666666;
+            --tertiary-accent: #FFFFFF;
+            --quaternary: #999999;
+            --quaternary-accent: #FFFFFF;
         }
 
         body {
             font-family: Arial, sans-serif;
-            background: #333333;
+            background: var(--main);
             overflow: hidden;
         }
 
@@ -58,7 +69,7 @@
             gap: 20px;
             position: sticky;
             top: 0;
-            background: #333;
+            background: var(--main);
             text-align: center;
             z-index: 100;
             padding-left: calc(var(--u) * 45);
@@ -69,14 +80,14 @@
             gap: 20px;
             position: sticky;
             bottom: 0;
-            background: #333;
+            background: var(--main);
             text-align: center;
             z-index: 100;
             padding-left: calc(var(--u) * 45);
         }
         @media (max-width: 600px) {
             .footer {
-                padding-bottom: 40px;
+                padding-bottom: 60px;
             }
         }
 
@@ -89,7 +100,7 @@
             flex-shrink: 0;
             position: sticky;
             left: 0;
-            background: #333;
+            background: var(--main);
             color: white;
             font-weight: bold;
             font-size: calc(var(--u) * 10);
@@ -103,7 +114,7 @@
             container-type: inline-size;
             display: flex;
             flex-direction: column;
-            border: var(--u) solid #dbb300;
+            border: var(--u) solid var(--main-accent);
             width: calc(var(--u)*104);
             flex-shrink: 0;
             gap: calc(var(--u)*10);
@@ -126,12 +137,12 @@
 
 
         .player_header {
-            color: #dbb300;
+            color: var(--main-accent);
             font-size: calc(var(--u) * 20);
             text-align: center;
             height: calc(var(--u) * 30);
             width: calc(var(--u) * 104);
-            border: var(--u) solid #dbb300;
+            border: var(--u) solid var(--main-accent);
             flex-shrink: 0;
             display: flex;
             align-items: center;
@@ -139,12 +150,12 @@
         }
 
         .score_footer {
-            color: #dbb300;
+            color: var(--main-accent);
             font-size: calc(var(--u) * 20);
             text-align: center;
             height: calc(var(--u) * 30);
             width: calc(var(--u) * 104);
-            border: var(--u) solid #dbb300;
+            border: var(--u) solid var(--main-accent);
             flex-shrink: 0;
         }
 
@@ -159,7 +170,7 @@
             align-items: center;
             justify-content: center;
             font-size: calc(var(--u) * 15);
-            background: #ebd5b3;
+            background: var(--primary);
         }
 
         .bonus_box {
@@ -168,7 +179,7 @@
             border: var(--u) solid black;
             text-align: center;
             font-size: calc(var(--u) * 12);
-            background: #ebd5b3;
+            background: var(--primary);
         }
 
         .value_box {
@@ -180,14 +191,14 @@
             align-items: center;
             justify-content: center;
             font-size: calc(var(--u) * 20);
-            background: #dbb172;
+            background: var(--secondary);
         }
         
         .arrow_btn {
             width: calc(var(--u) * 12);
             aspect-ratio: 1 / 1;
             border: var(--u) solid black;
-            background: #666666;
+            background: var(--tertiary);
             cursor: pointer;
             display: grid;
             place-items: center;
@@ -195,28 +206,39 @@
         }
 
         .toggle-btn {
-            width: calc(var(--u) * 24);
-            aspect-ratio: 2 / 1;
+            width: calc(var(--u) * 18);
+            aspect-ratio: 3/2;
             border: var(--u) solid black;
-            background: #666666;
+            background: var(--tertiary);
             cursor: pointer;
             display: grid;
             place-items: center;
-            color: white;
+            color: var(--tertiary-accent);
         }
 
         .arrow_btn:hover,
         .toggle-btn:hover {
-            background: #999999;
+            background: var(--quaternary);
         }
 
         .arrow_btn:active {
-            background: #BBBBBB;
+            background: var(--quaternary-accent);
+            color: var(--quaternary);
         }
 
         .toggle-btn.active {
-            background: #dbb300;
-            color: black;
+            background: var(--tertiary-accent);
+            color: var(--tertiary);
+        }
+
+        .toggle-btn.wager10 {
+            background: var(--quaternary);
+            color: var(--quaternary-accent);
+        }
+
+        .toggle-btn.wager20 {
+            background: var(--tertiary-accent);
+            color: var(--tertiary);
         }
 
         
@@ -229,10 +251,184 @@
                 'GRAD' 0,
                 'opsz' 20;
         }
+
+        .header-left-block {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: calc(var(--u) * 35);
+            height: calc(var(--u) * 30);
+            background: var(--main);
+            color: var(--main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            border: var(--u) solid var(--main);
+        }
+
+        .footer-left-block {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: calc(var(--u) * 35);
+            height: calc(var(--u) * 30);
+            background: var(--main);
+            color: var(--main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            border: var(--u) solid var(--main);
+        }
+        @media (max-width: 600px) {
+            .footer-left-block {
+                height: calc(var(--u) * 60);
+                bottom: 15px
+            }
+        }
+
+        .floating-btn {
+            position: fixed;
+            top: 10px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--main-accent);
+            color: var(--main);
+            font-size: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: var(--u) solid var(--main);
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+            background: var(--main-highlight);
+        }
+
+        .floating-btn:active {
+            transform: scale(0.95);
+        }
+
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1002;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+        }
+
+        .popup-content {
+            background: var(--primary);
+            padding: 30px;
+            border-radius: 10px;
+            border: 3px solid var(--main-accent);
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            position: relative;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border: none;
+            background: var(--tertiary);
+            color: var(--tertiary-accent);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-close:hover {
+            background: var(--quaternary);
+        }
+
+        .popup-content h2 {
+            color: var(--main);
+            margin-bottom: 15px;
+        }
+
+        .popup-content h3 {
+            color: var(--main);
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        .popup-content p {
+            color: var(--main);
+            line-height: 1.6;
+            width: calc(var(--u) * 275);
+        }
     </style>
 </head>
 
 <body>
+    <div class="header-left-block">
+        <button class="floating-btn" onclick="openPopup()">
+            <span class="material-symbols-outlined">question_mark</span>
+        </button>
+    </div>
+
+    <div class="popup-overlay" id="popupOverlay" onclick="closePopupOnOverlay(event)">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closePopup()">×</button>
+            <h2>Skull King Scorecard</h2>
+            <img src="assets/skullKingHelp.png" alt="Skull King Instructions" style="width:100%; height:auto; margin-bottom:15px;">
+            <p>
+                This scorecard is designed to help you keep track of scores while playing Skull King. 
+                Above is a diagram showing how each part is to be used but a few pieces will require additional explination.
+            </p>
+            <h3>Round Column:</h3>
+            <p>
+                The round column on the far left keeps track of the current round but it also tracks the number of tricks that are already claimed. 
+                In the event a kraken is played the number of claimed tricks will be 1 less then the round number.
+            </p>
+            <h3>Zero Bid:</h3>
+            <p>
+                The "Z" button is used to indicate that a player is attempting to bid zero tricks for that round. 
+                Zero bids follow standard Skull King rules.
+            </p>
+            <h3>Wager:</h3>
+            <p>
+                The "W00" button is used to indicate that a player is placing a wager for that round. 
+                The wager can be toggled between three states: 
+                    no wager (W00), 
+                    a 10-point wager (W10), 
+                    and a 20-point wager (W20). 
+                If the player meets their bid, they will earn the wagered points in addition to their score for that round. 
+                If they fail to meet their bid, they will lose the wagered points in addition to their other negative points for the round.
+            </p>
+            <h3>Round Points:</h3>
+            <p>
+                The large box in each round will calculate the points for that round, but the total box at the bottom of the screen is the only place that the total points of all rounds is displayed.
+                Additionally the scores are all calculated in real-time as bids, tricks, and bonuses are adjusted.
+            </p>
+        </div>
+    </div>
+
     <div class="container">
         <div class="scrollable_wrapper">
             <div class="content_wrapper">
@@ -242,6 +438,8 @@
             </div>
         </div>
     </div>
+
+    <div class="footer-left-block"></div>
 
     <script>
         function createPlayerHeaders(playerNames) {
@@ -298,6 +496,7 @@
                             </div>
                             <div class="score_row">
                                 <button class="toggle-btn zero-bid" onclick="this.classList.toggle('active'); updateRoundScore(this);">Z</button>
+                                <button class="toggle-btn wager" onclick="wager(this)">W00</button>
                             </div>
                         </div>
                         <div class="score_column">
@@ -392,6 +591,21 @@
             }
         }
         
+        function wager(button) {
+            if (button.classList.contains('wager10')) {
+                button.classList.remove('wager10');
+                button.classList.add('wager20');
+                button.textContent = 'W20';
+            } else if (button.classList.contains('wager20')) {
+                button.classList.remove('wager20');
+                button.textContent = 'W00';
+            } else {
+                button.classList.add('wager10');
+                button.textContent = 'W10';
+            }
+            updateRoundScore(button);
+        }
+
         function updateRoundScore(element) {
             const scoreContainer = element.closest('.score_container');
             const bidBox = scoreContainer.querySelector('.bid_box');
@@ -399,6 +613,7 @@
             const bonusBox = scoreContainer.querySelector('.bonus_box');
             const valueBox = scoreContainer.querySelector('.value_box');
             const zeroButton = scoreContainer.querySelector('.zero-bid');
+            const wagerButton = scoreContainer.querySelector('.wager');
             
             const bid = parseInt(bidBox.textContent);
             const take = parseInt(takeBox.textContent);
@@ -410,7 +625,6 @@
                 if (zeroButton.classList.contains('active')) {
                     if (take === 0) {
                         score = 10 * roundNum;
-                        score += bonus;
                     } else {
                         score = -10 * roundNum;
                     }
@@ -418,9 +632,24 @@
             } else {
                 if (bid === take) {
                     score = bid * 20;
-                    score += bonus;
                 } else {
                     score = -10 * Math.abs(bid - take);
+                }
+            }
+
+            if (bid === take) {
+                score += bonus;
+                if (wagerButton.classList.contains('wager10')) {
+                    score += 10;
+                } else if (wagerButton.classList.contains('wager20')) {
+                    score += 20;
+                }
+            }
+            else {
+                if (wagerButton.classList.contains('wager10')) {
+                    score -= 10;
+                } else if (wagerButton.classList.contains('wager20')) {
+                    score -= 20;
                 }
             }
             
@@ -445,6 +674,20 @@
             });
             
             totalBox.textContent = total;
+        }
+
+        function openPopup() {
+            document.getElementById('popupOverlay').classList.add('active');
+        }
+
+        function closePopup() {
+            document.getElementById('popupOverlay').classList.remove('active');
+        }
+
+        function closePopupOnOverlay(event) {
+            if (event.target.id === 'popupOverlay') {
+                closePopup();
+            }
         }
 
         generateGameSheet();
