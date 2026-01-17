@@ -256,12 +256,10 @@
             width: calc(var(--u) * 35);
             height: calc(var(--u) * 60);
             background: var(--main);
-            color: var(--main);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            border: var(--u) solid var(--main);
         }
 
         .footer-left-block {
@@ -270,14 +268,14 @@
             left: 0;
             width: calc(var(--u) * 35);
             height: calc(var(--u) * 60);
-            bottom: 15px;
             background: var(--main);
-            color: var(--main);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            border: var(--u) solid var(--main);
+        }
+        .footer-left-block.has-scrollbar {
+            margin-bottom: 15px;
         }
 
         .floating-btn {
@@ -683,6 +681,19 @@
         }
 
         generateGameSheet();
+
+        function checkScrollbar() {
+            const wrapper = document.querySelector('.scrollable_wrapper');
+            const footerBlock = document.querySelector('.footer-left-block');
+            if (wrapper.scrollWidth > wrapper.clientWidth) {
+                footerBlock.classList.add('has-scrollbar');
+            } else {
+                footerBlock.classList.remove('has-scrollbar');
+            }
+        }
+
+        window.addEventListener('load', checkScrollbar);
+        window.addEventListener('resize', checkScrollbar);
     </script>
 </body>
 
